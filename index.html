@@ -362,7 +362,7 @@
                                     <i class="bi bi-cloud-fog2"></i>
                                 </div>
                                 <div class="card-body">
-                                    <div class="kpi-value">12,458 tCO₂e</div>
+                                    <div class="kpi-value">12.458 tCO₂e</div>
                                     <p class="card-text text-muted">Periodo: Ene 2023 - Dic 2023</p>
                                     <div class="progress mb-2">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: 65%"></div>
@@ -628,7 +628,7 @@
                                         <tr>
                                             <td>Reducción consumo eléctrico</td>
                                             <td>2</td>
-                                            <td>15,000.00</td>
+                                            <td>15.000.00</td>
                                             <td>-5.00</td>
                                             <td>2024-12-31</td>
                                             <td><span class="badge bg-success">Activa</span></td>
@@ -640,7 +640,7 @@
                                         <tr>
                                             <td>Reducción emisiones transporte</td>
                                             <td>3</td>
-                                            <td>8,500.00</td>
+                                            <td>8.500.00</td>
                                             <td>-7.00</td>
                                             <td>2024-06-30</td>
                                             <td><span class="badge bg-warning">En riesgo</span></td>
@@ -744,7 +744,7 @@
                                             <td>2023-09</td>
                                             <td>2</td>
                                             <td>Electricidad</td>
-                                            <td>25,000.00</td>
+                                            <td>25.000.00</td>
                                             <td>kWh</td>
                                             <td>8.75</td>
                                             <td>
@@ -756,7 +756,7 @@
                                             <td>2023-09</td>
                                             <td>1</td>
                                             <td>Combustibles</td>
-                                            <td>1,200.00</td>
+                                            <td>1.200.00</td>
                                             <td>L</td>
                                             <td>3.12</td>
                                             <td>
@@ -1490,23 +1490,23 @@
                                     <tbody id="evaluationResults">
                                         <tr>
                                             <td>Optimización Rutas Logísticas</td>
-                                            <td>45,250</td>
+                                            <td>45.250</td>
                                             <td>2.8</td>
-                                            <td>1,250,000</td>
+                                            <td>1.250.000</td>
                                             <td><span class="badge bg-success">Alta</span></td>
                                         </tr>
                                         <tr>
                                             <td>Paneles Solares Tienda Norte</td>
-                                            <td>62,150</td>
+                                            <td>62.150</td>
                                             <td>4.2</td>
-                                            <td>850,000</td>
+                                            <td>850.000</td>
                                             <td><span class="badge bg-warning">Media</span></td>
                                         </tr>
                                         <tr>
                                             <td>Cambio a LED</td>
-                                            <td>78,450</td>
+                                            <td>78.450</td>
                                             <td>5.6</td>
-                                            <td>420,000</td>
+                                            <td>420.000</td>
                                             <td><span class="badge bg-danger">Baja</span></td>
                                         </tr>
                                     </tbody>
@@ -1553,9 +1553,9 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Optimización Rutas Logísticas</h5>
                                             <h6 class="card-subtitle mb-2 text-muted">Prioridad: Alta</h6>
-                                            <p class="card-text">Costo por tonelada: $45,250 CLP</p>
+                                            <p class="card-text">Costo por tonelada: $45.250 CLP</p>
                                             <p class="card-text">Payback: 2.8 años</p>
-                                            <p class="card-text">VAN: $1,250,000 CLP</p>
+                                            <p class="card-text">VAN: $1.250.000 CLP</p>
                                             <div class="d-grid">
                                                 <button class="btn btn-sm btn-outline-primary">Ver detalles</button>
                                             </div>
@@ -1567,9 +1567,9 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Paneles Solares Tienda Norte</h5>
                                             <h6 class="card-subtitle mb-2 text-muted">Prioridad: Media</h6>
-                                            <p class="card-text">Costo por tonelada: $62,150 CLP</p>
+                                            <p class="card-text">Costo por tonelada: $62.150 CLP</p>
                                             <p class="card-text">Payback: 4.2 años</p>
-                                            <p class="card-text">VAN: $850,000 CLP</p>
+                                            <p class="card-text">VAN: $850.000 CLP</p>
                                             <div class="d-grid">
                                                 <button class="btn btn-sm btn-outline-primary">Ver detalles</button>
                                             </div>
@@ -1581,9 +1581,9 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Cambio a LED</h5>
                                             <h6 class="card-subtitle mb-2 text-muted">Prioridad: Baja</h6>
-                                            <p class="card-text">Costo por tonelada: $78,450 CLP</p>
+                                            <p class="card-text">Costo por tonelada: $78.450 CLP</p>
                                             <p class="card-text">Payback: 5.6 años</p>
-                                            <p class="card-text">VAN: $420,000 CLP</p>
+                                            <p class="card-text">VAN: $420.000 CLP</p>
                                             <div class="d-grid">
                                                 <button class="btn btn-sm btn-outline-primary">Ver detalles</button>
                                             </div>
@@ -2011,69 +2011,78 @@
             });
         });
 
-        function initDashboardCharts() {
-            // Gráfico de evolución de emisiones
-            const emissionsCtx = document.getElementById('emissionsChart');
-            if (emissionsCtx) {
-                new Chart(emissionsCtx, {
-                    type: 'line',
-                    data: {
-                        labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-                        datasets: [{
-                            label: '2023',
-                            data: [1250, 1180, 1120, 1080, 1050, 1020, 980, 950, 920, 890, 860, 830],
-                            borderColor: '#004c91',
-                            backgroundColor: 'rgba(0, 76, 145, 0.1)',
-                            fill: true,
-                            tension: 0.3
-                        }, {
-                            label: '2022',
-                            data: [1350, 1300, 1260, 1220, 1190, 1160, 1130, 1100, 1070, 1040, 1010, 980],
-                            borderColor: '#ffc220',
-                            backgroundColor: 'rgba(255, 194, 32, 0.1)',
-                            fill: true,
-                            tension: 0.3
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            title: {
-                                display: true,
-                                text: 'Evolución Mensual de Emisiones (tCO₂e)'
-                            }
-                        }
+function initDashboardCharts() {
+    // Gráfico de evolución de emisiones
+    const emissionsCtx = document.getElementById('emissionsChart');
+    if (emissionsCtx) {
+        new Chart(emissionsCtx, {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                datasets: [{
+                    label: '2023',
+                    data: [1250, 1180, 1120, 1080, 1050, 1020, 980, 950, 920, 890, 860, 830],
+                    borderColor: '#004c91',
+                    backgroundColor: 'rgba(0, 76, 145, 0.1)',
+                    fill: true,
+                    tension: 0.3
+                }, {
+                    label: '2022',
+                    data: [1350, 1300, 1260, 1220, 1190, 1160, 1130, 1100, 1070, 1040, 1010, 980],
+                    borderColor: '#ffc220',
+                    backgroundColor: 'rgba(255, 194, 32, 0.1)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Evolución Mensual de Emisiones (tCO₂e)'
                     }
-                });
+                }
             }
+        });
+    }
 
-            // Gráfico de distribución por alcance
-            const scopeCtx = document.getElementById('scopeChart');
-            if (scopeCtx) {
-                new Chart(scopeCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Alcance 1', 'Alcance 2', 'Alcance 3'],
-                        datasets: [{
-                            data: [25, 35, 40],
-                            backgroundColor: ['#004c91', '#ffc220', '#003366'],
-                            borderWidth: 1
-                        }]
+    // Gráfico de distribución por alcance
+    const scopeCtx = document.getElementById('scopeChart');
+    if (scopeCtx) {
+        new Chart(scopeCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Alcance 1', 'Alcance 2', 'Alcance 3'],
+                datasets: [{
+                    data: [25, 35, 40],
+                    backgroundColor: ['#004c91', '#ffc220', '#003366'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Distribución por Alcance (%)'
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            title: {
-                                display: true,
-                                text: 'Distribución por Alcance (%)'
-                            }
+                    datalabels: {
+                        color: '#fff',
+                        formatter: (value) => value + '%',
+                        font: {
+                            weight: 'bold',
+                            size: 16
                         }
                     }
-                });
-            }
-        }
+                }
+            },
+        });
+    }
+}
+
 
         function initEvaluationCharts() {
             // Gráfico comparativo de costos
