@@ -1956,60 +1956,63 @@
             </div>
         </footer>
     </div>
+    <!-- Scripts base -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Manejar el menú móvil
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const sidebar = document.querySelector('.sidebar');
-            const sidebarOverlay = document.querySelector('.sidebar-overlay');
-            
-            mobileMenuBtn.addEventListener('click', function() {
-                sidebar.classList.toggle('show');
-                sidebarOverlay.classList.toggle('show');
-            });
-            
-            sidebarOverlay.addEventListener('click', function() {
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Manejar el menú móvil
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    
+    mobileMenuBtn.addEventListener('click', function() {
+        sidebar.classList.toggle('show');
+        sidebarOverlay.classList.toggle('show');
+    });
+    
+    sidebarOverlay.addEventListener('click', function() {
+        sidebar.classList.remove('show');
+        sidebarOverlay.classList.remove('show');
+    });
+
+    // Cerrar menú al hacer clic en un enlace (en móviles)
+    const navLinks = document.querySelectorAll('.sidebar .nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 992) {
                 sidebar.classList.remove('show');
                 sidebarOverlay.classList.remove('show');
-            });
-
-            // Cerrar menú al hacer clic en un enlace (en móviles)
-            const navLinks = document.querySelectorAll('.sidebar .nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 992) {
-                        sidebar.classList.remove('show');
-                        sidebarOverlay.classList.remove('show');
-                    }
-                });
-            });
-
-            // Inicializar gráficos
-            initDashboardCharts();
-
-            // Configurar eventos para los botones de evaluación
-            document.getElementById('calculateBtn')?.addEventListener('click', calculateEvaluation);
-            document.getElementById('prioritizeBtn')?.addEventListener('click', prioritizeInitiatives);
-
-            // Re-inicializar gráficos al cambiar de pestaña
-            const tabLinks = document.querySelectorAll('[data-bs-toggle="tab"]');
-            tabLinks.forEach(link => {
-                link.addEventListener('shown.bs.tab', function(e) {
-                    const target = e.target.getAttribute('href');
-                    if (target === '#dashboard') {
-                        initDashboardCharts();
-                    } else if (target === '#evaluacion') {
-                        initEvaluationCharts();
-                    } else if (target === '#analisis') {
-                        initAnalysisCharts();
-                    } else if (target === '#simulacion') {
-                        initSimulationCharts();
-                    }
-                });
-            });
+            }
         });
+    });
+
+    // Inicializar gráficos
+    initDashboardCharts();
+
+    // Configurar eventos para los botones de evaluación
+    document.getElementById('calculateBtn')?.addEventListener('click', calculateEvaluation);
+    document.getElementById('prioritizeBtn')?.addEventListener('click', prioritizeInitiatives);
+
+    // Re-inicializar gráficos al cambiar de pestaña
+    const tabLinks = document.querySelectorAll('[data-bs-toggle="tab"]');
+    tabLinks.forEach(link => {
+        link.addEventListener('shown.bs.tab', function(e) {
+            const target = e.target.getAttribute('href');
+            if (target === '#dashboard') {
+                initDashboardCharts();
+            } else if (target === '#evaluacion') {
+                initEvaluationCharts();
+            } else if (target === '#analisis') {
+                initAnalysisCharts();
+            } else if (target === '#simulacion') {
+                initSimulationCharts();
+            }
+        });
+    });
+});
 
 function initDashboardCharts() {
     // Gráfico de evolución de emisiones
@@ -2048,7 +2051,7 @@ function initDashboardCharts() {
         });
     }
 
-    // Gráfico de distribución por alcance
+    // Gráfico de distribución por alcance (con %)
     const scopeCtx = document.getElementById('scopeChart');
     if (scopeCtx) {
         new Chart(scopeCtx, {
@@ -2067,7 +2070,11 @@ function initDashboardCharts() {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Distribución por Alcance (%)'
+                        text: 'Distribución por Alcance (%)',
+                        font: { size: 18 }
+                    },
+                    legend: {
+                        position: 'bottom'
                     },
                     datalabels: {
                         color: '#fff',
@@ -2079,167 +2086,212 @@ function initDashboardCharts() {
                     }
                 }
             },
+            plugins: [ChartDataLabels] // 👈 necesario para mostrar los %
         });
     }
 }
 
-
-        function initEvaluationCharts() {
-            // Gráfico comparativo de costos
-            const costCtx = document.getElementById('costComparisonChart');
-            if (costCtx) {
-                new Chart(costCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Optimización Rutas', 'Paneles Solares', 'Cambio a LED'],
-                        datasets: [{
-                            label: 'Costo por tCO₂e evitado (CLP)',
-                            data: [45250, 62150, 78450],
-                            backgroundColor: [
-                                'rgba(40, 167, 69, 0.7)',
-                                'rgba(255, 193, 7, 0.7)',
-                                'rgba(220, 53, 69, 0.7)'
-                            ]
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false
-                    }
-                });
+function initEvaluationCharts() {
+    const costCtx = document.getElementById('costComparisonChart');
+    if (costCtx) {
+        new Chart(costCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Optimización Rutas', 'Paneles Solares', 'Cambio a LED'],
+                datasets: [{
+                    label: 'Costo por tCO₂e evitado (CLP)',
+                    data: [45250, 62150, 78450],
+                    backgroundColor: [
+                        'rgba(40, 167, 69, 0.7)',
+                        'rgba(255, 193, 7, 0.7)',
+                        'rgba(220, 53, 69, 0.7)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
             }
+        });
+    }
 
-            // Gráfico de Valor Actual Neto (VAN)
-            const vanCtx = document.getElementById('vanChart');
-            if (vanCtx) {
-                new Chart(vanCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Optimización Rutas', 'Paneles Solares', 'Cambio a LED'],
-                        datasets: [{
-                            label: 'Valor Actual Neto (CLP)',
-                            data: [1250000, 850000, 420000],
-                            backgroundColor: [
-                                'rgba(40, 167, 69, 0.7)',
-                                'rgba(255, 193, 7, 0.7)',
-                                'rgba(220, 53, 69, 0.7)'
-                            ]
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false
-                    }
-                });
+    const vanCtx = document.getElementById('vanChart');
+    if (vanCtx) {
+        new Chart(vanCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Optimización Rutas', 'Paneles Solares', 'Cambio a LED'],
+                datasets: [{
+                    label: 'Valor Actual Neto (CLP)',
+                    data: [1250000, 850000, 420000],
+                    backgroundColor: [
+                        'rgba(40, 167, 69, 0.7)',
+                        'rgba(255, 193, 7, 0.7)',
+                        'rgba(220, 53, 69, 0.7)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
             }
-        }
+        });
+    }
+}
 
-        function initAnalysisCharts() {
-            // Gráfico de tendencias
-            const trendsCtx = document.getElementById('trendsChart');
-            if (trendsCtx) {
-                new Chart(trendsCtx, {
-                    type: 'line',
-                    data: {
-                        labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
-                        datasets: [{
-                            label: 'Alcance 1',
-                            data: [3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 3.2, 3.24, 3.12],
-                            borderColor: '#004c91',
-                            backgroundColor: 'rgba(0, 76, 145, 0.1)',
-                            fill: true
-                        }, {
-                            label: 'Alcance 2',
-                            data: [10.2, 9.8, 9.5, 9.3, 9.1, 8.9, 9.0, 9.1, 8.75],
-                            borderColor: '#ffc220',
-                            backgroundColor: 'rgba(255, 194, 32, 0.1)',
-                            fill: true
-                        }, {
-                            label: 'Alcance 3',
-                            data: [16.8, 16.5, 16.2, 16.0, 15.8, 15.7, 15.8, 15.8, 15.43],
-                            borderColor: '#003366',
-                            backgroundColor: 'rgba(0, 51, 102, 0.1)',
-                            fill: true
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false
-                    }
-                });
+function initAnalysisCharts() {
+    const trendsCtx = document.getElementById('trendsChart');
+    if (trendsCtx) {
+        new Chart(trendsCtx, {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
+                datasets: [{
+                    label: 'Alcance 1',
+                    data: [3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 3.2, 3.24, 3.12],
+                    borderColor: '#004c91',
+                    backgroundColor: 'rgba(0, 76, 145, 0.1)',
+                    fill: true
+                }, {
+                    label: 'Alcance 2',
+                    data: [10.2, 9.8, 9.5, 9.3, 9.1, 8.9, 9.0, 9.1, 8.75],
+                    borderColor: '#ffc220',
+                    backgroundColor: 'rgba(255, 194, 32, 0.1)',
+                    fill: true
+                }, {
+                    label: 'Alcance 3',
+                    data: [16.8, 16.5, 16.2, 16.0, 15.8, 15.7, 15.8, 15.8, 15.43],
+                    borderColor: '#003366',
+                    backgroundColor: 'rgba(0, 51, 102, 0.1)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
             }
+        });
+    }
 
-            // Gráfico comparativo
-            const comparisonCtx = document.getElementById('comparisonChart');
-            if (comparisonCtx) {
-                new Chart(comparisonCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Alcance 1', 'Alcance 2', 'Alcance 3'],
-                        datasets: [{
-                            label: '2023',
-                            data: [3.12, 8.75, 15.43],
-                            backgroundColor: ['#004c91', '#ffc220', '#003366']
-                        }, {
-                            label: '2022',
-                            data: [3.45, 9.20, 16.10],
-                            backgroundColor: ['#66a3d2', '#ffd966', '#668cb3']
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false
-                    }
-                });
+    const comparisonCtx = document.getElementById('comparisonChart');
+    if (comparisonCtx) {
+        new Chart(comparisonCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Alcance 1', 'Alcance 2', 'Alcance 3'],
+                datasets: [{
+                    label: '2023',
+                    data: [3.12, 8.75, 15.43],
+                    backgroundColor: ['#004c91', '#ffc220', '#003366']
+                }, {
+                    label: '2022',
+                    data: [3.45, 9.20, 16.10],
+                    backgroundColor: ['#66a3d2', '#ffd966', '#668cb3']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
             }
-        }
+        });
+    }
+}
 
-        function initSimulationCharts() {
-            const simulationCtx = document.getElementById('simulationChart');
-            if (simulationCtx) {
-                new Chart(simulationCtx, {
-                    type: 'line',
-                    data: {
-                        labels: ['2023', '2024', '2025', '2026', '2027', '2028'],
-                        datasets: [{
-                            label: 'Escenario Base',
-                            data: [325.6, 335.4, 345.9, 356.7, 367.9, 379.4],
-                            borderColor: '#dc3545',
-                            backgroundColor: 'rgba(220, 53, 69, 0.1)',
-                            fill: true
-                        }, {
-                            label: 'Escenario Simulado',
-                            data: [325.6, 312.8, 295.3, 278.2, 262.5, 247.9],
-                            borderColor: '#198754',
-                            backgroundColor: 'rgba(25, 135, 84, 0.1)',
-                            fill: true
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false
-                    }
-                });
-            }
-        }
+let simulationChart; // variable global del gráfico
 
-        function calculateEvaluation() {
-            const selectedInitiatives = document.querySelectorAll('.initiative-check:checked');
-            if (selectedInitiatives.length === 0) {
-                alert('Por favor seleccione al menos una iniciativa para evaluar.');
-                return;
-            }
-            alert('Cálculo realizado. Los resultados se han actualizado.');
-        }
+function initSimulationCharts() {
+    const ctx = document.getElementById('simulationChart');
 
-        function prioritizeInitiatives() {
-            const selectedInitiatives = document.querySelectorAll('.initiative-check:checked');
-            if (selectedInitiatives.length === 0) {
-                alert('Por favor seleccione al menos una iniciativa para priorizar.');
-                return;
-            }
-            alert('Priorización realizada. Las recomendaciones se han actualizado.');
-        }
-    </script>
+    const baseData = [325.6, 335.4, 345.9, 356.7, 367.9, 379.4];
+    const labels = ['2023', '2024', '2025', '2026', '2027', '2028'];
+
+    simulationChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Escenario Base',
+                    data: baseData,
+                    borderColor: '#dc3545',
+                    backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                    fill: true,
+                },
+                {
+                    label: 'Escenario Simulado',
+                    data: [...baseData], // empieza igual que el base
+                    borderColor: '#198754',
+                    backgroundColor: 'rgba(25, 135, 84, 0.1)',
+                    fill: true,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+        },
+    });
+
+    // Asignar evento de cambio a los inputs para actualizar el gráfico en tiempo real
+    document.querySelectorAll('#simulacion input, #simulacion select').forEach(el => {
+        el.addEventListener('input', updateSimulationChart);
+        el.addEventListener('change', updateSimulationChart);
+    });
+}
+
+function updateSimulationChart() {
+    if (!simulationChart) return;
+
+    // Obtener años de inicio y fin
+    const start = parseInt(document.getElementById('simPeriodoInicio').value);
+    const end = parseInt(document.getElementById('simPeriodoFin').value);
+
+    // Generar etiquetas según los años seleccionados
+    const labels = [];
+    for (let year = start; year <= end; year++) labels.push(year.toString());
+
+    // Datos base simulados (puedes ajustarlos si deseas otros valores base)
+    const baseData = [325.6, 335.4, 345.9, 356.7, 367.9, 379.4].slice(0, labels.length);
+
+    // Calcular reducción total según las medidas seleccionadas
+    let reductionPercent = 0;
+    if (document.getElementById('medida1').checked) reductionPercent += 5;
+    if (document.getElementById('medida2').checked) reductionPercent += 8;
+    if (document.getElementById('medida3').checked) reductionPercent += 3;
+
+    // Crear nuevo conjunto de datos simulados
+    const simulatedData = baseData.map((value, i) => {
+        return +(value * (1 - reductionPercent / 100) ** (i + 1)).toFixed(1);
+    });
+
+    // Actualizar gráfico
+    simulationChart.data.labels = labels;
+    simulationChart.data.datasets[0].data = baseData;
+    simulationChart.data.datasets[1].data = simulatedData;
+    simulationChart.update();
+}
+
+// Iniciar el gráfico al cargar la página
+document.addEventListener('DOMContentLoaded', initSimulationCharts);
+
+function calculateEvaluation() {
+    const selectedInitiatives = document.querySelectorAll('.initiative-check:checked');
+    if (selectedInitiatives.length === 0) {
+        alert('Por favor seleccione al menos una iniciativa para evaluar.');
+        return;
+    }
+    alert('Cálculo realizado. Los resultados se han actualizado.');
+}
+
+function prioritizeInitiatives() {
+    const selectedInitiatives = document.querySelectorAll('.initiative-check:checked');
+    if (selectedInitiatives.length === 0) {
+        alert('Por favor seleccione al menos una iniciativa para priorizar.');
+        return;
+    }
+    alert('Priorización realizada. Las recomendaciones se han actualizado.');
+}
+</script>
+
 </body>
 </html>
